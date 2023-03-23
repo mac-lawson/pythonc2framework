@@ -1,5 +1,5 @@
 import sys
-from c2f import help
+from c2f import PyC2f, help
 
 logo = '''
 
@@ -21,5 +21,18 @@ if(len(sys.argv)) == 1:
 
 elif(sys.argv[1]) == "-h":
     help.getHelp()
+
+elif(sys.argv[1]) == "-c":
+    if(PyC2f.ping(str(sys.argv[2]))):
+        print("[*] target is up")
+    else:
+        print("[*] target is down")
+
+# elif(sys.argv[1]) == "-l":
+#     if(PyC2f.ping(str(sys.argv[2]))):
+#         print("[*] target is up")
+#     else:
+#         print("[*] target is down")
+
 
 

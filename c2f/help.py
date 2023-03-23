@@ -6,5 +6,10 @@ def getHelp():
     list all active connections
     -l 
 
+    ping
+    -p <ip/uri>
+
+    destroy program memory
+    -d 
     '''
     print(help)
