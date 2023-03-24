@@ -3,6 +3,8 @@ import subprocess
 import sqlite3
 import os
 import requests
+import datetime
+
 
 
 
@@ -82,7 +84,7 @@ def createDB():
     conn.commit()  # commit changes
     conn.close()  # close connection
 
-    print("PyC2f Framework Database Inited")
+    print("Database Created")
 
 
 '''
@@ -103,7 +105,7 @@ else:
 
 '''
 
-def file_exists(file_path):
+def fileExists(file_path):
 
     return os.path.exists(file_path) and os.path.isfile(file_path)
 
@@ -111,7 +113,6 @@ def file_exists(file_path):
 addTarget
 
 Modifies database to add a new target
-
 '''
 def addTarget(ip, status, privilege):
     conn = sqlite3.connect('targets.db')  # connect to database (or create if not exists)
@@ -124,6 +125,24 @@ def addTarget(ip, status, privilege):
     conn.close()  # close connection
 
 '''
+listTargets
+
+Lists all data from database
+SELECT *
+'''
+def listTargets():
+    conn = sqlite3.connect('targets.db')  # connect to database (or create if not exists)
+    c = conn.cursor()  # create a cursor object
+    # create table with columns
+    c.execute('''SELECT * FROM targets;
+    ''')
+
+    conn.commit()  # commit changes
+    conn.close()  # close connection
+
+'''
+try_credentials
+
 This function tries every combination of username and password from the wordlists 
 until it finds one that works or exhausts all possibilities. 
 If successful credentials are found, the function prints a message indicating which credentials worked and returns True. 
@@ -156,3 +175,33 @@ def try_credentials(url, username_wordlist, password_wordlist):
     # If we get here, none of the credentials worked
     print("Unable to authenticate with any of the provided credentials")
     return False
+
+'''
+
+This function serves as the primary log platform for PyC2f. 
+
+Outputs logs to log.txt in root directory. 
+'''
+def logPlatform(event, description):
+    currentTime = datetime.datetime.now()
+    with open("./log.txt", "a") as logFile:
+        logFile.write(f"\n{str(currentTime)}\t{str(event)}\n[x]\t{description}\n")
+
+
+
+'''
+Unit Tests for PyC2f.py
+@support
+@working
+@structure
+
+
+Tests the following functions:
+- ping()
+- file_exists()
+'''
+def testPing():
+    assert ping("google.com") == True
+def testFileManager():
+    assert fileExists("./help.py") == True
+ 

@@ -11,5 +11,8 @@ def getHelp():
 
     destroy program memory
     -d 
+
+    initialize database (not required for non-persistent users)
+    -init
     '''
     print(help)
